@@ -5,6 +5,8 @@ int b,c,d,e;
 float z,y,x;
 float S,E;
 int mode=0;
+float sliderY;
+boolean dragging=false;
 
 void setup(){
   size(600,600);
@@ -15,45 +17,29 @@ void setup(){
   d=70;
   S=1;
   e=50;
+  sliderY=150;
 }
 
 void draw(){
+  fill(255);
+  noStroke();
+  rect(0,0,45,height);
+  stroke(0);
+      line(20,100,20,300);
+  if(dragging){
+    sliderY=constrain(mouseY,100,300);
+  }
+  circle(20,sliderY,30);
+  S=map(sliderY,100,300,1,50);
+  E=map(sliderY,100,300,1,100);
+  
   fill(255);
   stroke(0);
   strokeWeight(1);
   rect(100,50,20,300);
   noFill();
   rect(200,50,350,350);
-  
-  square(200,430,30);
-  if(mousePressed&&mouseX>200&&mouseX<230&&mouseY>430&&mouseY<460){
-    S=1;
-    E=10;
-  }
-  
-  square(250,430,30);
-  if(mousePressed&&mouseX>250&&mouseX<280&&mouseY>430&&mouseY<460){
-    S=3;
-    E=20;
-  }
-  
-   square(300,430,30);
-  if(mousePressed&&mouseX>300&&mouseX<330&&mouseY>430&&mouseY<460){
-    S=5;
-    E=30;
-  }
-  
-   square(350,430,30);
-  if(mousePressed&&mouseX>350&&mouseX<380&&mouseY>430&&mouseY<460){
-    S=7;
-    E=40;
-  }
-  
-    square(400,430,30);
-  if(mousePressed&&mouseX>400&&mouseX<430&&mouseY>430&&mouseY<460){
-    S=9;
-    E=50;
-  }
+
     if(mousePressed&&mouseX>200&&mouseX<550&&mouseY>50&&mouseY<400){
       if(mode==0){
     stroke(x,y,z);
@@ -64,6 +50,7 @@ void draw(){
       }
     line(pmouseX,pmouseY,mouseX,mouseY);
     }
+
     stroke(0);
     strokeWeight(1);
   RE(100,b);
@@ -134,6 +121,7 @@ void draw(){
       d=50;
     }
   }
+  dragging=false;
   }
 void RE(int x,int y){
   fill(255);
@@ -153,5 +141,10 @@ void keyPressed(){
     mode=0;
   }else if(key=='e'){
     mode=1;
+  }
+}
+void mousePressed(){
+  if(dist(mouseX,mouseY,20,sliderY)<15){
+    dragging=true;
   }
 }
