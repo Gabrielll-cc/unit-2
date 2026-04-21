@@ -36,7 +36,6 @@ void draw(){
   fill(255);
   stroke(0);
   strokeWeight(1);
-  rect(100,50,20,300);
   noFill();
   rect(200,50,350,350);
 
@@ -50,9 +49,16 @@ void draw(){
       }
     line(pmouseX,pmouseY,mouseX,mouseY);
     }
+    fill(255);
+    noStroke();
+    rect(50,0,150,500);
+    rect(0,0,600,50);
+    rect(551,0,50,600);
+    rect(100,401,500,200);
 
     stroke(0);
     strokeWeight(1);
+    rect(100,50,20,300);
   RE(100,b);
   z=b-50;
 if(dr1){
