@@ -1,8 +1,9 @@
 int starCount;
 float[]starX,starY,starSize,starAlpha;
 
-float meteorX,meteorT;
-boolean meteorSpeed=8;
+float meteorX,meteorY;
+boolean meteorActive=false;
+float meteorSpeed=8;
 
 float houseBrightness=30;
 float targetBrightness=30;
@@ -31,7 +32,7 @@ void draw(){
   drawStars();
   
   drawMeteor();
-  
+    
   drawHouse();
   
   updateHouseBrightness();
@@ -58,7 +59,7 @@ void drawStars(){
 }
 
 void drawMeteor(){
-  if(!meteorActive&&random(1)<0.005){
+  if(!meteorActive&&random(1)<0.02){
     meteorActive=true;
     meteorX=random(width);
     meteorY=random(height*0.3);
@@ -69,11 +70,34 @@ void drawMeteor(){
     strokeWeight(2);
     line(meteorX,meteorY,meteorX-20,meteorY-10);
     
-    meteor+=meteorSpeed;
+    meteorX+=meteorSpeed;
     meteorY+=meteorSpeed*0.5;
     
     if(meteorX>width||meteorY>height){
       meteorActive=false;
     }
   }
+}
+
+
+void drawHouse(){
+  float houseX=width/2-50;
+  float houseY=height-120;
+  
+  if(mouseX>houseX&&mouseX<houseX+150&&mouseY>houseY&&mouseY<houseY+120){
+    targetBrightness=300;
+  }else{
+    targetBrightness=30;
+  }
+  
+  fill(houseBrightness);
+  noStroke();
+  rect(houseX,houseY,150,120);
+  
+  triangle(houseX,houseY,houseX+75,houseY-60,
+  houseX+150,houseY);
+}
+
+void updateHouseBrightness(){
+  houseBrightness=lerp(houseBrightness,targetBrightness,0.05);
 }
