@@ -7,6 +7,12 @@ float S,E;
 int mode=0;
 float sliderY;
 boolean dragging,dr1,dr2,dr3=false;
+int k=0;
+
+PImage star;
+PImage house;
+
+PImage memory;
 
 void setup(){
   size(600,600);
@@ -18,6 +24,9 @@ void setup(){
   S=1;
   e=50;
   sliderY=150;
+  k=255;
+  star=loadImage("star.png");
+  house=loadImage("house.png");
 }
 
 void draw(){
@@ -27,6 +36,7 @@ void draw(){
   stroke(0);
       line(20,100,20,300);
   if(dragging){
+    k=0;
     sliderY=constrain(mouseY,100,300);
   }
   circle(20,sliderY,30);
@@ -43,11 +53,18 @@ void draw(){
       if(mode==0){
     stroke(x,y,z);
     strokeWeight(S);
-      }else{
+    line(pmouseX,pmouseY,mouseX,mouseY);
+      }else if(mode==1){
         stroke(255);
         strokeWeight(E);
+        line(pmouseX,pmouseY,mouseX,mouseY);
       }
-    line(pmouseX,pmouseY,mouseX,mouseY);
+    if(mode==2){
+      image(star,mouseX,mouseY,50,50);
+    }
+    if(mode==3){
+      image(house,mouseX,mouseY,50,50);
+    }
     }
     fill(255);
     noStroke();
@@ -79,10 +96,29 @@ if(dr1){
   
     fill(x,y,z);
   rect(50,400,120,20);
+  fill(k);
+    noStroke();
+    circle(375,550,S);
+    fill(0);
+    rect(200,450,60,60);
+    image(star,205,455,50,50);
+    rect(300,450,60,60);
+    image(house,305,455,50,50);
+    noFill();
+    stroke(0);
+    strokeWeight(5);
+    rect(400,450,90,40);
+    strokeWeight(1);
+    textSize(40);
+    text("clear",404,485);
+    textSize(20);
+    text("COPY",30,500);
+    text("paste",30,530);
 }
   void mouseReleased(){
 
   dragging=false;
+  k=255;
   dr1=false;
   dr2=false;
   dr3=false;
@@ -119,5 +155,20 @@ void mousePressed(){
   }
   if(mouseX>50&&mouseX<70&&mouseY>d&&mouseY<d+20){
     dr3=true;
+  }
+  if(mouseX<260&&mouseX>200&&mouseY<510&&mouseY>450){
+    mode=2;
+  }
+  if(mouseX<360&&mouseX>300&&mouseY<510&&mouseY>450){
+    mode=3;
+  }
+  if(mouseX<490&&mouseX>400&&mouseY<490&&mouseY>450){
+    background(255);
+  }
+  if(mouseX<75&&mouseX>30&&mouseY<500&&mouseY>480){
+    memory=get();
+  }
+  if(mouseX<75&&mouseX>30&&mouseY<530&&mouseY>510){
+    image(memory,0,0);
   }
 }
